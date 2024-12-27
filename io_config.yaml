@@ -1,0 +1,25 @@
+version: 0.1.1
+default:
+  # Default profile created for data IO access.
+  # Add your credentials for the source you use, and delete the rest.
+  # AWS
+  AWS_ACCESS_KEY_ID: "{{ env_var('AWS_ACCESS_KEY_ID') }}"
+  AWS_SECRET_ACCESS_KEY: "{{ env_var('AWS_SECRET_ACCESS_KEY') }}"
+  AWS_SESSION_TOKEN: session_token (Used to generate Redshift credentials)
+  AWS_REGION: region
+  # MongoDB
+  # Specify either the connection string or the (host, password, user, port) to connect to MongoDB.
+  MONGODB_CONNECTION_STRING: "mongodb://{username}:{password}@{host}:{port}/"
+  MONGODB_HOST: host
+  MONGODB_PORT: 27017
+  MONGODB_USER: user
+  MONGODB_PASSWORD: password
+  MONGODB_DATABASE: database
+  # Neo4J
+  # Specify either the connection string or the (host, password, user, port) to connect to MongoDB.
+  NEO4J_CONNECTION_STRING: ""
+  NEO4J_HOST: host
+  NEO4J_PORT: 27017
+  NEO4J_USER: user
+  NEO4J_PASSWORD: password
+  NEO4J_DATABASE: database
