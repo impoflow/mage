@@ -1,5 +1,13 @@
 triggers:
-- name: s3PutTrigger
+- description: null
+  envs: []
+  last_enabled_at: 2025-01-04 15:09:40.971272
+  name: s3PutTrigger
+  pipeline_uuid: dataprocessing
+  schedule_interval: null
   schedule_type: api
-  start_time: 2025-01-04
+  settings: null
+  sla: null
+  start_time: 2025-01-04 15:09:00
   status: active
+  token: test
