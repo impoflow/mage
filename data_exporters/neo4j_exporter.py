@@ -14,7 +14,7 @@ from mage_ai.data_preparation.shared.secrets import get_secret_value
 def export_data(data, *args, **kwargs):
     uri = f"bolt://{os.environ.get('NEO_HOST')}:7687"
     user = os.environ.get('NEO_USER')
-    password = os.environ.get('NEO_PASSWORD')
+    password = os.environ.get('NEO_PASSWD')
 
     neo4j_connection = Neo4jConnection(uri, user, password)
     neo4j_connection.connect()
