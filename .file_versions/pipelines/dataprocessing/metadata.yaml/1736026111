@@ -17,6 +17,22 @@ blocks:
   uuid: aws_s3_loader
 - all_upstream_blocks_executed: false
   color: null
+  configuration: {}
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: mongodb_exporter
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_exporter
+  upstream_blocks:
+  - zip_to_dataframe
+  uuid: mongodb_exporter
+- all_upstream_blocks_executed: false
+  color: null
   configuration:
     file_source:
       path: transformers/zip_to_dataframe.py
@@ -35,22 +51,6 @@ blocks:
   upstream_blocks:
   - aws_s3_loader
   uuid: zip_to_dataframe
-- all_upstream_blocks_executed: false
-  color: null
-  configuration: {}
-  downstream_blocks: []
-  executor_config: null
-  executor_type: local_python
-  has_callback: false
-  language: python
-  name: mongodb_exporter
-  retry_config: null
-  status: executed
-  timeout: null
-  type: data_exporter
-  upstream_blocks:
-  - zip_to_dataframe
-  uuid: mongodb_exporter
 - all_upstream_blocks_executed: false
   color: null
   configuration: {}

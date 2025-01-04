@@ -11,3 +11,4 @@ triggers:
   start_time: 2025-01-04 15:09:00
   status: active
   token: s3PutTrigger
+  variables: {}

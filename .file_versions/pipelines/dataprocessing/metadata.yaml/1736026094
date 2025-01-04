@@ -17,26 +17,6 @@ blocks:
   uuid: aws_s3_loader
 - all_upstream_blocks_executed: false
   color: null
-  configuration:
-    file_source:
-      path: transformers/zip_to_dataframe.py
-  downstream_blocks:
-  - mongodb_exporter
-  - neo4j_exporter
-  executor_config: null
-  executor_type: local_python
-  has_callback: false
-  language: python
-  name: zip_to_dataframe
-  retry_config: null
-  status: not_executed
-  timeout: null
-  type: transformer
-  upstream_blocks:
-  - aws_s3_loader
-  uuid: zip_to_dataframe
-- all_upstream_blocks_executed: false
-  color: null
   configuration: {}
   downstream_blocks: []
   executor_config: null
@@ -67,6 +47,26 @@ blocks:
   upstream_blocks:
   - zip_to_dataframe
   uuid: neo4j_exporter
+- all_upstream_blocks_executed: false
+  color: null
+  configuration:
+    file_source:
+      path: transformers/zip_to_dataframe.py
+  downstream_blocks:
+  - mongodb_exporter
+  - neo4j_exporter
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: zip_to_dataframe
+  retry_config: null
+  status: not_executed
+  timeout: null
+  type: transformer
+  upstream_blocks:
+  - aws_s3_loader
+  uuid: zip_to_dataframe
 cache_block_output_in_memory: false
 callbacks: []
 concurrency_config: {}
