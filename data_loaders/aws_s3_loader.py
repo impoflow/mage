@@ -26,8 +26,8 @@ def load_from_s3_bucket(*args, **kwargs):
     
     serialized_zip = {
         'filename': object_key,
-        'content': base64.b64encode(zipfile.getvalue()).decode('utf-8'),
-        'size': zipfile.getbuffer().nbytes
+        'content': base64.b64encode(zipfile_in_memory.getvalue()).decode('utf-8'),
+        'size': zipfile_in_memory.getbuffer().nbytes
     }
 
     return serialized_zip

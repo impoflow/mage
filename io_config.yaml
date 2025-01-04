@@ -9,9 +9,9 @@ default:
   AWS_REGION: region
   # MongoDB
   # Specify either the connection string or the (host, password, user, port) to connect to MongoDB.
-  MONGODB_CONNECTION_STRING: mongodb://{{ env_var('MONGODB_HOST') }}:27017
-  MONGODB_HOST: "{{ env_var('MONGODB_HOST') }}"
+  MONGODB_CONNECTION_STRING: mongodb://{{ env_var('MONGO_HOST') }}:27017
+  MONGODB_HOST: "{{ env_var('MONGO_HOST') }}"
   MONGODB_PORT: 27017
-  MONGODB_USER: admin
-  MONGODB_PASSWORD: "{{ env_var('MONGODB_PASSWORD') }}"
+  MONGODB_USER: "{{ env_var('MONGO_USER') }}"
+  MONGODB_PASSWORD: "{{ env_var('MONGO_PASSWD') }}"
   MONGODB_DATABASE: database
