@@ -9,23 +9,22 @@ if 'data_loader' not in globals():
 if 'test' not in globals():
     from mage_ai.data_preparation.decorators import test
 
-from mage_ai.data_preparation.shared.secrets import get_secret_value
-
 
 @data_loader
 def load_from_s3_bucket(*args, **kwargs):
     bucket_name = kwargs['bucket_name']
-    object_key = kwargs['object_key']
+    user = kwargs['user']
+    project = kwargs['project_name']
 
     s3 = boto3.client('s3')
 
-    obj = s3.get_object(Bucket=bucket_name, Key=object_key)
+    obj = s3.get_object(Bucket=bucket_name, Key=user + '/' + project + '.zip')
     zip_bytes = obj['Body'].read()
     
     zipfile_in_memory = BytesIO(zip_bytes)
     
     serialized_zip = {
-        'filename': object_key,
+        'filename': project,
         'content': base64.b64encode(zipfile_in_memory.getvalue()).decode('utf-8'),
         'size': zipfile_in_memory.getbuffer().nbytes
     }
