@@ -10,4 +10,4 @@ triggers:
   sla: null
   start_time: 2025-01-04 15:09:00
   status: active
-  token: test
+  token: s3PutTrigger
