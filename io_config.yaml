@@ -9,17 +9,9 @@ default:
   AWS_REGION: region
   # MongoDB
   # Specify either the connection string or the (host, password, user, port) to connect to MongoDB.
-  MONGODB_CONNECTION_STRING: "mongodb://{username}:{password}@{host}:{port}/"
-  MONGODB_HOST: host
+  MONGODB_CONNECTION_STRING: mongodb://{{ env_var('MONGODB_HOST') }}:27017
+  MONGODB_HOST: "{{ env_var('MONGODB_HOST') }}"
   MONGODB_PORT: 27017
-  MONGODB_USER: user
-  MONGODB_PASSWORD: password
+  MONGODB_USER: admin
+  MONGODB_PASSWORD: "{{ env_var('MONGODB_PASSWORD') }}"
   MONGODB_DATABASE: database
-  # Neo4J
-  # Specify either the connection string or the (host, password, user, port) to connect to MongoDB.
-  NEO4J_CONNECTION_STRING: ""
-  NEO4J_HOST: host
-  NEO4J_PORT: 27017
-  NEO4J_USER: user
-  NEO4J_PASSWORD: password
-  NEO4J_DATABASE: database
