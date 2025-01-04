@@ -12,10 +12,9 @@ from mage_ai.data_preparation.shared.secrets import get_secret_value
 
 @data_exporter
 def export_data(data, *args, **kwargs):
-    # in local set uri as host.dokcer.internal
-    uri = f"bolt://{get_secret_value('neo4j_uri')}:7687"
-    user = get_secret_value('neo4j_user')
-    password = get_secret_value('neo4j_password')
+    uri = f"bolt://{os.environ.get('NEO_HOST')}:7687"
+    user = os.environ.get('NEO_USER')
+    password = os.environ.get('NEO_PASSWORD')
 
     neo4j_connection = Neo4jConnection(uri, user, password)
     neo4j_connection.connect()
