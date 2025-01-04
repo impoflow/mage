@@ -15,3 +15,11 @@ default:
   MONGODB_USER: "{{ env_var('MONGO_USER') }}"
   MONGODB_PASSWORD: "{{ env_var('MONGO_PASSWD') }}"
   MONGODB_DATABASE: database
+  # Neo4j
+  # Specify either the connection string or the (host, password, user, port) to connect to MongoDB.
+  NEO_CONNECTION_STRING: bolt://{{ env_var('NEO_HOST') }}:7687
+  NEO_HOST: "{{ env_var('NEO_HOST') }}"
+  NEO_PORT: 7687
+  NEO_USER: "{{ env_var('NEO_USER') }}"
+  NEO_PASSWORD: "{{ env_var('NEO_PASSWD') }}"
+  NEO_DATABASE: database
