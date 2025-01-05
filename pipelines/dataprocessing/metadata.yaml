@@ -89,11 +89,6 @@ spark_config: {}
 tags: []
 type: python
 uuid: dataprocessing
-variables:
-  collaborators:
-  - User_2
-  - User_3
-  project_name: feeder
-  user: User_1
-variables_dir: /home/orr/.mage_data/mage
+variables: []
+variables_dir: null
 widgets: []
