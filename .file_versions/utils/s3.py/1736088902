@@ -1,0 +1,21 @@
+class S3DataLoader:
+    def __init__(self):
+        self.s3_client = boto3.client('s3')
+    
+    def load_zip_from_s3(bucket_name, user, project_name):
+        bucket_name = kwargs['bucket_name']
+        user = kwargs['user']
+        project = kwargs['project_name']
+
+        s3 = boto3.client('s3')
+
+        obj = s3.get_object(Bucket=bucket_name, Key=user + '/' + project + '.zip')
+        zip_bytes = obj['Body'].read()
+    
+        zipfile_in_memory = BytesIO(zip_bytes)
+
+        serialized_zip = {
+            'filename': project,
+            'content': base64.b64encode(zipfile_in_memory.getvalue()).decode('utf-8'),
+            'size': zipfile_in_memory.getbuffer().nbytes
+        }

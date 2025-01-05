@@ -5,7 +5,7 @@ from io import BytesIO
 from typing import List, IO
 import re
 
-from mage.utils.transformer import DataTransformer
+from mage.utils.tr import S3ZipLoader  # Usar S3ZipLoader en lugar de S3DataLoader
 
 if 'transformer' not in globals():
     from mage_ai.data_preparation.decorators import transformer
@@ -29,23 +29,22 @@ def transform(data, *args, **kwargs):
 
     return transformed_data
 
-@test
-def test_is_dataframe(output, *args) -> None:
-    assert isinstance(output, pd.DataFrame), f'Expected output to be a DataFrame, but got {type(output)}'
 
 @test
-def test_output_not_none(output, *args) -> None:
+def test_output(output, *args) -> None:
+    """
+    Template code for testing the output of the block.
+    """
     assert output is not None, 'The output is undefined'
-
-@test
-def test_output_not_empty(output, *args) -> None:   
+    assert isinstance(output, pd.DataFrame), 'The output is not a DataFrame'
     assert not output.empty, 'The output DataFrame is empty'
 
 @test
-def test_ismain_exist(output, *args) -> None:
+def test_ismain(output, *args) -> None:
+    """
+    Template code for testing the output of the block.
+    """
     assert 'ismain' in output.columns, "The column 'ismain' is missing from the DataFrame"
 
-@test
-def test_has_one_ismain(output, *args) -> None:
     ismain_true_count = output['ismain'].sum()
     assert ismain_true_count == 1, f"The column 'ismain' should have exactly one True value, but found {ismain_true_count}"

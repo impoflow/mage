@@ -1,0 +1,6 @@
+class S3DataLoader:
+    def __init__(self, bucket_name, user, project_name):
+        self.bucket_name = bucket_name
+        self.user = user
+        self.project_name = project_name
+        self.s3_client = boto3.client('s3')
