@@ -1,11 +1,19 @@
 import base64
+import pandas as pd
 import zipfile
 from io import BytesIO
 from typing import List, IO
 import re
-import pandas as pd
+
+if 'transformer' not in globals():
+    from mage_ai.data_preparation.decorators import transformer
+if 'test' not in globals():
+    from mage_ai.data_preparation.decorators import test
+
 
 class FileExtractor:
+    """Handles extraction of files from a ZIP archive."""
+    
     @staticmethod
     def extract_java_files(zip_in_memory: IO) -> List[dict]:
         if zip_in_memory is None:
@@ -21,7 +29,9 @@ class FileExtractor:
                 for name in java_files
             ]
 
-class DataProcessor:    
+class DataProcessor:
+    """Processes data to filter imports, implements, and identify Main classes based on filenames."""
+    
     @staticmethod
     def clean_codes(lines: List[str]) -> List[str]:
         return [line.replace(";", "").strip() for line in lines]
@@ -67,16 +77,21 @@ class DataProcessor:
         return df
 
 
-class DataTransformer:   
+class DataTransformer:
+    """Main class to orchestrate the transformation process."""
+    
     def __init__(self):
         self.file_extractor = FileExtractor()
         self.data_processor = DataProcessor()
 
     def transform(self, zip_data: dict) -> pd.DataFrame:
+        """Transform raw data into a processed format."""
         try:
+            # Decode Base64 content back to BytesIO
             zip_content = base64.b64decode(zip_data['content'])
             zip_in_memory = BytesIO(zip_content)
             
+            # Extract Java files from ZIP
             extracted_files = self.file_extractor.extract_java_files(zip_in_memory)
             
             data = []
@@ -101,3 +116,31 @@ class DataTransformer:
         
         except Exception as e:
             raise RuntimeError(f"Error during data transformation: {str(e)}") from e
+
+
+@transformer
+def transform(data, *args, **kwargs):
+    transformer = DataTransformer()  # Create an instance
+    transformed_data = transformer.transform(data)  # Transform the serialized data
+
+    return transformed_data
+
+
+@test
+def test_output(output, *args) -> None:
+    """
+    Template code for testing the output of the block.
+    """
+    assert output is not None, 'The output is undefined'
+    assert isinstance(output, pd.DataFrame), 'The output is not a DataFrame'
+    assert not output.empty, 'The output DataFrame is empty'
+
+@test
+def test_is_main(output, *args) -> None:
+    """
+    Template code for testing the output of the block.
+    """
+    assert 'is_main' in output.columns, "The column 'is_main' is missing from the DataFrame"
+
+    ismain_true_count = output['is_main'].sum()
+    assert ismain_true_count == 1, f"The column 'is_main' should have exactly one True value, but found {ismain_true_count}"

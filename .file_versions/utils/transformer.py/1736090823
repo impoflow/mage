@@ -79,6 +79,7 @@ class DataTransformer:
             
             extracted_files = self.file_extractor.extract_java_files(zip_in_memory)
             
+            print('Inspecting classes')
             data = []
             for file in extracted_files:
                 file_content = file["content"]
@@ -87,6 +88,9 @@ class DataTransformer:
                 implements = self.data_processor.extract_implements(file_content)
                 implements_cleaned = self.data_processor.clean_codes(implements)
                 is_main = self.data_processor.contains_main_method(file_content)
+
+                if is_main:
+                    print(f'Main class found: {file}')
                 
                 data.append({
                     "filename": file["filename"],
@@ -97,6 +101,7 @@ class DataTransformer:
                 
             df = pd.DataFrame(data)
             df = self.data_processor.filter_imports_and_implements(df).drop(columns=["code_implements"])
+            print(df.columns)
             return df
         
         except Exception as e:

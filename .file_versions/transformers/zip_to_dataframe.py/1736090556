@@ -1,4 +1,9 @@
+import base64
 import pandas as pd
+import zipfile
+from io import BytesIO
+from typing import List, IO
+import re
 
 from mage.utils.transformer import DataTransformer
 
@@ -10,8 +15,8 @@ if 'test' not in globals():
 
 @transformer
 def transform(data, *args, **kwargs):
-    transformer = DataTransformer()
-    transformed_data = transformer.transform(data)
+    transformer = DataTransformer()  # Create an instance
+    transformed_data = transformer.transform(data)  # Transform the serialized data
 
     return transformed_data
 
@@ -29,9 +34,9 @@ def test_output_not_empty(output, *args) -> None:
 
 @test
 def test_ismain_exist(output, *args) -> None:
-    assert 'is_main' in output.columns, "The column 'is_main' is missing from the DataFrame"
+    assert 'ismain' in output.columns, "The column 'ismain' is missing from the DataFrame"
 
 @test
 def test_has_one_ismain(output, *args) -> None:
-    ismain_true_count = output['is_main'].sum()
-    assert ismain_true_count == 1, f"The column 'is_main' should have exactly one True value, but found {ismain_true_count}"
+    ismain_true_count = output['ismain'].sum()
+    assert ismain_true_count == 1, f"The column 'ismain' should have exactly one True value, but found {ismain_true_count}"
