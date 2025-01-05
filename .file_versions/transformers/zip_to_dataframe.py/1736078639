@@ -159,3 +159,5 @@ def test_ismain(output, *args) -> None:
 
     ismain_true_count = output['ismain'].sum()
     assert ismain_true_count == 1, f"The column 'ismain' should have exactly one True value, but found {ismain_true_count}"
+
+    assert output['ismain'].dtype == bool, "The column 'ismain' should contain only boolean values"

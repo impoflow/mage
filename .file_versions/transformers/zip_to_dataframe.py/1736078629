@@ -155,7 +155,12 @@ def test_ismain(output, *args) -> None:
     """
     Template code for testing the output of the block.
     """
+
     assert 'ismain' in output.columns, "The column 'ismain' is missing from the DataFrame"
 
+    # Comprobar que la columna 'ismain' tiene exactamente un valor True
     ismain_true_count = output['ismain'].sum()
     assert ismain_true_count == 1, f"The column 'ismain' should have exactly one True value, but found {ismain_true_count}"
+
+    # Comprobar que los valores de la columna 'ismain' son booleanos
+    assert output['ismain'].dtype == bool, "The column 'ismain' should contain only boolean values"
