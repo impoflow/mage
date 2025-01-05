@@ -22,7 +22,7 @@ def export_data(df: DataFrame, **kwargs):
 
     uri = neo4j_config.get('NEO_CONNECTION_STRING')
     user = neo4j_config.get('NEO_USER')
-    password = neo4j_config.get('NEO_PASSWD')
+    password = neo4j_config.get('NEO_PASSWORD')
 
     neo4j_connection = Neo4jConnection(uri, user, password)
     neo4j_connection.connect()
