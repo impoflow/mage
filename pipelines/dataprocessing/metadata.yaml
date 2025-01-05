@@ -90,5 +90,5 @@ tags: []
 type: python
 uuid: dataprocessing
 variables: []
-variables_dir: /home/orr/.mage_data/mage
+variables_dir: null
 widgets: []
