@@ -11,7 +11,8 @@ def read_classes_from_df(project_df):
             'class_name': class_name,
             'code_imports': code_imports,
             'imports': imports,
-            'implements': implements
+            'implements': implements,
+            'is_main': row['is_main']
         })
         
     return classes

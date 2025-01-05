@@ -79,15 +79,23 @@ class Neo4jHandler:
             class_name = class_info['class_name']
             imports = class_info['imports']
             implements = class_info['implements']
+            is_main = class_info['is_main']
+
+            print(class_info)
             
             self.add_class_node(class_name, project_name, owner)
-            
-            if class_name.endswith('Main'):
+
+            if is_main:
+                print(class_name)
                 self.add_main_class(project_name, class_name, owner)
+            
             for import_class in imports:
                 self.add_class_node(import_class, project_name, owner)
                 self.add_import(class_name, import_class, project_name, owner)
-                print(class_name, import_class)
+                print(f"Import added: {class_name} -> {import_class}")
+            
             for implement_class in implements:
                 self.add_class_node(implement_class, project_name, owner)
                 self.add_implement(class_name, implement_class, project_name, owner)
+                print(f"Implements added: {class_name} -> {implement_class}")
+

@@ -30,7 +30,7 @@ class FileExtractor:
             ]
 
 class DataProcessor:
-    """Processes data to filter imports and implements based on filenames."""
+    """Processes data to filter imports, implements, and identify Main classes based on filenames."""
     
     @staticmethod
     def clean_codes(lines: List[str]) -> List[str]:
@@ -64,11 +64,18 @@ class DataProcessor:
         return [interface for interface in implements_list if interface in filename_base]
     
     @staticmethod
+    def contains_main_method(file_content: str) -> bool:
+        """Checks if a file contains the main method."""
+        pattern = r'public\s+static\s+void\s+main\s*\(\s*String\s*\[\s*\]\s*args\s*\)'
+        return bool(re.search(pattern, file_content))
+    
+    @staticmethod
     def filter_imports_and_implements(df: pd.DataFrame) -> pd.DataFrame:
         filename_base = df['filename'].tolist()
         df["imports"] = df["code_imports"].apply(lambda imports: DataProcessor.clean_imports(imports, filename_base))
         df["implements"] = df["code_implements"].apply(lambda impls: DataProcessor.clean_implements(impls, filename_base))
         return df
+
 
 class DataTransformer:
     """Main class to orchestrate the transformation process."""
@@ -87,7 +94,8 @@ class DataTransformer:
             # Extract Java files from ZIP
             extracted_files = self.file_extractor.extract_java_files(zip_in_memory)
             
-            # Extract imports and implements from each Java file
+            print('Inspecting classes')
+            # Extract imports, implements, and check for main method in each Java file
             data = []
             for file in extracted_files:
                 file_content = file["content"]
@@ -95,15 +103,21 @@ class DataTransformer:
                 imports_cleaned = self.data_processor.clean_codes(imports)
                 implements = self.data_processor.extract_implements(file_content)
                 implements_cleaned = self.data_processor.clean_codes(implements)
+                is_main = self.data_processor.contains_main_method(file_content)
+
+                if is_main:
+                    print(f'Main class found: {file}')
                 
                 data.append({
                     "filename": file["filename"],
                     "code_imports": imports_cleaned,
-                    "code_implements": implements_cleaned
+                    "code_implements": implements_cleaned,
+                    "is_main": is_main
                 })
                 
             df = pd.DataFrame(data)
             df = self.data_processor.filter_imports_and_implements(df).drop(columns=["code_implements"])
+            print(df.columns)
             return df
         
         except Exception as e:
