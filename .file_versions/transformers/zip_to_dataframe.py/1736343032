@@ -12,6 +12,7 @@ if 'test' not in globals():
 def transform(data, *args, **kwargs):
     transformer = DataTransformer()
     transformed_data = transformer.transform(data)
+
     print(transformed_data)
     return transformed_data
 

@@ -24,13 +24,13 @@ def load(*args, **kwargs):
     return data
 
 @test
-def test_is_dataframe(output, *args) -> None:
-    assert isinstance(output, dict), f'Expected output to be a DataFrame, but got {type(output)}'
+def test_is_dataframe(data, *args) -> None:
+    assert isinstance(data, pd.DataFrame), f'Expected output to be a DataFrame, but got {type(output)}'
 
 @test
-def test_output_not_none(output, *args) -> None:
+def test_output_not_none(data, *args) -> None:
     assert output is not None, 'The output is undefined'
 
 @test
 def test_output_not_empty(output, *args) -> None:   
-    assert len(output) > 0, 'The output DataFrame is empty'
+    assert not output.empty, 'The output DataFrame is empty'

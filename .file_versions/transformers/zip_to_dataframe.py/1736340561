@@ -1,0 +1,37 @@
+import pandas as pd
+
+from mage.utils.transformer import DataTransformer
+
+if 'transformer' not in globals():
+    from mage_ai.data_preparation.decorators import transformer
+if 'test' not in globals():
+    from mage_ai.data_preparation.decorators import test
+
+
+@transformer
+def transform(data, *args, **kwargs):
+    transformer = DataTransformer()
+    transformed_data = transformer.transform(data)
+
+    return transformed_data
+
+@test
+def test_is_dataframe(transformed_data, *args) -> None:
+    assert isinstance(transformed_data, pd.DataFrame), f'Expected output to be a DataFrame, but got {type(output)}'
+
+@test
+def test_output_not_none(transformed_data, *args) -> None:
+    assert transformed_data is not None, 'The output is undefined'
+
+@test
+def test_output_not_empty(transformed_data, *args) -> None:   
+    assert not transformed_data.empty, 'The output DataFrame is empty'
+
+@test
+def test_ismain_exist(transformed_data, *args) -> None:
+    assert 'is_main' in transformed_data.columns, "The column 'is_main' is missing from the DataFrame"
+
+@test
+def test_has_one_ismain(transformed_data, *args) -> None:
+    ismain_true_count = transformed_data['is_main'].sum()
+    assert ismain_true_count == 1, f"The column 'is_main' should have exactly one True value, but found {ismain_true_count}"

@@ -1,5 +1,6 @@
 import base64
 from io import BytesIO
+import pandas as pd
 
 class S3DataLoader:
     def __init__(self, s3_client):
