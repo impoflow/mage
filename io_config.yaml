@@ -11,6 +11,7 @@ default:
   # Specify either the connection string or the (host, password, user, port) to connect to MongoDB.
   MONGODB_CONNECTION_STRING: mongodb://{{ env_var('MONGO_USER') }}:{{ env_var('MONGO_PASSWD') }}@{{ env_var('MONGO_HOST') }}:27017/?authSource=admin
   MONGODB_PORT: 27017
+  MONGODB_DATABASE: database
   # Neo4j
   # Specify either the connection string or the (host, password, user, port) to connect to MongoDB.
   NEO_CONNECTION_STRING: bolt://{{ env_var('NEO_HOST') }}:7687
