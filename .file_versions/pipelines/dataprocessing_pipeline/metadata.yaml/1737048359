@@ -76,7 +76,24 @@ blocks:
 cache_block_output_in_memory: false
 callbacks: []
 concurrency_config: {}
-conditionals: []
+conditionals:
+- all_upstream_blocks_executed: false
+  color: null
+  configuration: {}
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: is_main
+  retry_config: null
+  status: updated
+  timeout: null
+  type: conditional
+  upstream_blocks:
+  - mongodb_exporter
+  - neo4j_exporter
+  uuid: spring_explorer
 created_at: '2025-01-05 14:31:52.260715+00:00'
 data_integration: null
 description: null
@@ -84,7 +101,7 @@ executor_config: {}
 executor_count: 1
 executor_type: null
 extensions: {}
-name: dataprocessing
+name: dataprocessing_pipeline
 notification_config: {}
 remote_variables_dir: null
 retry_config: {}
@@ -94,7 +111,7 @@ settings:
 spark_config: {}
 tags: []
 type: python
-uuid: dataprocessing
+uuid: dataprocessing_pipeline
 variables: {}
 variables_dir: /home/orr/.mage_data/mage
 widgets: []

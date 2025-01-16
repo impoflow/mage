@@ -1,0 +1,15 @@
+if 'condition' not in globals():
+    from mage_ai.data_preparation.decorators import condition
+
+
+@condition
+def evaluate_condition(data, *args, **kwargs) -> bool:
+    @test
+def test_ismain_exist(output, *args) -> None:
+    assert 'is_main' in output.columns, "The column 'is_main' is missing from the DataFrame"
+
+@test
+def test_has_one_ismain(output, *args) -> None:
+    ismain_true_count = output['is_main'].sum()
+    assert ismain_true_count == 1, f"The column 'is_main' should have exactly one True value, but found {ismain_true_count}"
+    return True
