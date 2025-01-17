@@ -5,8 +5,8 @@ default:
   # AWS
   AWS_ACCESS_KEY_ID: "{{ env_var('AWS_ACCESS_KEY_ID') }}"
   AWS_SECRET_ACCESS_KEY: "{{ env_var('AWS_SECRET_ACCESS_KEY') }}"
-  AWS_SESSION_TOKEN: session_token (Used to generate Redshift credentials)
-  AWS_REGION: region
+  AWS_SESSION_TOKEN: "{{ env_var('AWS_ACCESS_SESSION_TOKEN') }}"
+  AWS_REGION: "{{ env_var('AWS_REGION') }}"
   # MongoDB
   # Specify either the connection string or the (host, password, user, port) to connect to MongoDB.
   MONGODB_CONNECTION_STRING: mongodb://{{ env_var('MONGO_USER') }}:{{ env_var('MONGO_PASSWD') }}@{{ env_var('MONGO_HOST') }}:27017/?authSource=admin
