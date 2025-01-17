@@ -63,10 +63,10 @@ Here’s an example payload for running the pipeline:
 
 #### Explanation of the Fields:
 
-`user`: The owner of the project (e.g., `josejuan`).
-`bucket_name`: The AWS S3 bucket where the zip file is stored (e.g., `TSCD`).
-`project_name`: The name of the project being added (e.g., `feeder`). _# Note: the project_name must mach with the zip filename._
-`collaborators`: A list of collaborators for the project.
+- `user`: The owner of the project (e.g., `josejuan`).
+- `bucket_name`: The AWS S3 bucket where the zip file is stored (e.g., `TSCD`).
+- `project_name`: The name of the project being added (e.g., `feeder`). _# Note: the project_name must mach with the zip filename._
+- `collaborators`: A list of collaborators for the project.
 
 When this payload is sent, the system uses the provided details to create a project in the Neo4j database.
 
