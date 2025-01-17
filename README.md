@@ -1,29 +1,59 @@
 # Dockerized MAGE Data Pipelines
 
-### How to deploy
-To run the container, you can simply run the `run.sh` script given on this repo. To do so, first clone the repository executing the next command:
+## How to Deploy
+
+To run the container, clone the repository by executing the following command:
 
 ```bash
 git clone https://github.com/impoflow/mage
 ```
 
-One should place oneself inside the cloned repository. Done this, we need to add the required permissions to execute the script:
+Once the repository is cloned, navigate into the directory:
 
 ```bash
-chmod +x run.sh
+cd mage
 ```
 
-Now you'll be able to run the script and start the pipelines.
+Build the Docker image using the following command:
 
-### How to use
+```bash
+docker build -t mage-pipeline .
+```
 
-You can easily run the data pipeline by using the API already deployed by a MAGE Trigger. This API Restful has the following URL: `http://localhost:6789/api/pipeline_schedules/1/pipeline_runs/998deabc21aa46d6af8c06c51dd0a0cb`. This API offers a POST method to add projects to the Neo4j database. The following chunk shows an example of a project you can post using this method.
+After the image is built, you can run the container with:
+a
+```bash
+docker run -p 6789:6789 mage-pipeline
+```
+
+This will start the container and expose the API on port `6789`.
+
+## How to Use
+
+### Pre-requisite: AWS S3 Bucket
+
+This pipeline requires an AWS S3 bucket where you upload a zip file. This zip file is critical for triggering the pipeline.
+
+### Accessing the API
+
+The Mage Trigger API is exposed at:
+
+```
+http://localhost:6789/api/pipeline_schedules/1/pipeline_runs/s3PutTrigger
+```
+
+This API is a RESTful endpoint that supports `POST` requests to trigger the data pipeline.
+
+### JSON Payload Strucutre
+
+Here’s an example payload for running the pipeline:
 
 ```json
 {
   "pipeline_run": {
     "variables": {
       "user": "josejuan",
+      "bucket_name": "TSCD",
       "project_name": "feeder",
       "collaborators": ["ricardocardn", "oscarrico"]
     }
@@ -31,4 +61,31 @@ You can easily run the data pipeline by using the API already deployed by a MAGE
 }
 ```
 
-This will result in a project owned by user `josejuan`, where users `ricardocardn` and `oscarrico` are collaborators.
+#### Explanation of the Fields:
+
+`user`: The owner of the project (e.g., `josejuan`).
+`bucket_name`: The AWS S3 bucket where the zip file is stored (e.g., `TSCD`).
+`project_name`: The name of the project being added (e.g., `feeder`). _# Note: the project_name must mach with the zip filename._
+`collaborators`: A list of collaborators for the project.
+
+When this payload is sent, the system uses the provided details to create a project in the Neo4j database.
+
+## Example Request with cURL
+
+To post the example project using `curl`, run the following command:
+
+```bash
+curl -X POST \
+  http://localhost:6789/api/pipeline_schedules/1/pipeline_runs/998deabc21aa46d6af8c06c51dd0a0cb \
+  -H "Content-Type: application/json" \
+  -d '{
+    "pipeline_run": {
+      "variables": {
+        "user": "josejuan",
+        "bucket_name": "TSCD",
+        "project_name": "feeder",
+        "collaborators": ["ricardocardn", "oscarrico"]
+      }
+    }
+  }'
+```
