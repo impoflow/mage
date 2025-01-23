@@ -3,6 +3,29 @@
 
 This repository includes a GitHub Actions workflow to automate the Continuous Deployment (CD) of the project. The workflow ensures that every push to the `main` branch builds, tests, and deploys a Docker image for the project.
 
+```mermaid
+graph TD
+    A[CD Pipeline] -->|Push to main / Manual Trigger| B[Start Workflow]
+    
+    B --> C[Checkout Code]
+    C --> D[Log into DockerHub]
+    D --> E[Build Docker Image]
+    E --> F[Run Docker Container]
+    F --> G[View Docker Logs]
+    G --> H[Push Docker Image to DockerHub]
+
+    subgraph Steps in Workflow
+        C -->|GitHub Actions| D
+        D -->|Authenticate| E
+        E -->|Build Image| F
+        F -->|Deploy and Run| G
+        G -->|Monitor Logs| H
+    end
+
+    H --> I[Deployment Completed]
+
+```
+
 ## **Workflow Details**
 
 ### **Trigger**
